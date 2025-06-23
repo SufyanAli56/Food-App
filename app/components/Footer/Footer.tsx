@@ -211,7 +211,7 @@ const Footer = () => {
               {translations[currentLanguage].links}
             </h3>
             <ul className="space-y-3">
-              {menuItems.map((item, index) => (
+              {menuItems.map((item) => (
                 <motion.li 
                   key={item.href}
                   whileHover={{ x: 5 }}
