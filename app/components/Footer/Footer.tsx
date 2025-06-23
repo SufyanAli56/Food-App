@@ -1,27 +1,15 @@
 // components/Footer/Footer.tsx
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { GiFoodTruck } from "react-icons/gi";
-import { FiChevronDown } from "react-icons/fi";
 import { FaFacebook, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
-
-import US from 'country-flag-icons/react/3x2/US';
-import SA from 'country-flag-icons/react/3x2/SA';
-import FR from 'country-flag-icons/react/3x2/FR';
-import ES from 'country-flag-icons/react/3x2/ES';
-import { useDispatch, useSelector } from 'react-redux';
+import { motion } from "framer-motion";
+import { useSelector } from 'react-redux';
 import type { RootState } from '../../lib/Store';
-import { setLanguage } from '../../lib/languageSlice';
 
 // Type definitions
 type LanguageCode = 'en' | 'ar' | 'fr' | 'es';
-
-interface Language {
-  code: LanguageCode;
-  name: string;
-  flag: React.ReactNode;
-}
 
 type TranslationKey = 'home' | 'menu' | 'about' | 'contact' | 'orderNow' | 
                      'breakfast' | 'lunch' | 'dinner' | 'drinks' |
@@ -42,20 +30,16 @@ interface MenuItem {
 
 const Footer = () => {
   // State management
-  const [isLangOpen, setIsLangOpen] = useState(false);
   const [email, setEmail] = useState('');
+  const [isMounted, setIsMounted] = useState(false);
   
   // Redux hooks
-  const dispatch = useDispatch();
   const currentLanguage = useSelector((state: RootState) => state.language.currentLanguage);
 
-  // Language and translation data
-  const languages: Language[] = [
-    { code: "en", name: "English", flag: <US className="w-4 h-4 mr-2" /> },
-    { code: "ar", name: "العربية", flag: <SA className="w-4 h-4 mr-2" /> },
-    { code: "fr", name: "Français", flag: <FR className="w-4 h-4 mr-2" /> },
-    { code: "es", name: "Español", flag: <ES className="w-4 h-4 mr-2" /> },
-  ];
+  useEffect(() => {
+    setIsMounted(true);
+    return () => setIsMounted(false);
+  }, []);
 
   const translations: Translations = {
     en: {
@@ -156,193 +140,181 @@ const Footer = () => {
     setEmail('');
   };
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  if (!isMounted) return null;
+
   return (
-    <footer className="bg-gray-900 text-white pt-12 pb-6">
+    <motion.footer 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="bg-gradient-to-b from-gray-900 to-gray-800 text-white pt-12 pb-6"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+        >
           {/* Logo and Description */}
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2">
+          <motion.div className="space-y-4">
+            <motion.div 
+              whileHover={{ scale: 1.02 }}
+              className="flex items-center space-x-2"
+            >
               <GiFoodTruck className="text-3xl text-orange-500" />
               <span className="text-2xl font-extrabold text-orange-600 tracking-tight">
                 Sufi Bites
               </span>
-            </div>
-            <p className="text-gray-400">
+            </motion.div>
+            <p className="text-gray-300">
               {translations[currentLanguage].address}
             </p>
-            <p className="text-gray-400">
+            <p className="text-gray-300">
               {translations[currentLanguage].hours}
             </p>
-            <p className="text-gray-400">
+            <p className="text-gray-300">
               {translations[currentLanguage].phone}
             </p>
-            <p className="text-gray-400">
+            <p className="text-gray-300">
               {translations[currentLanguage].email}
             </p>
-          </div>
+          </motion.div>
 
           {/* Quick Links */}
-          <div>
+          <motion.div >
             <h3 className="text-lg font-semibold mb-4 border-b border-orange-600 pb-2">
               {translations[currentLanguage].links}
             </h3>
             <ul className="space-y-3">
-              {menuItems.map((item) => (
-                <li key={item.href}>
+              {menuItems.map((item, index) => (
+                <motion.li 
+                  key={item.href}
+                  whileHover={{ x: 5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
                   <Link
                     href={item.href}
-                    className="text-gray-400 hover:text-orange-500 transition-colors duration-300"
+                    className="text-gray-300 hover:text-orange-500 transition-colors duration-300 flex items-center"
                   >
+                    <span className="w-2 h-2 bg-orange-500 rounded-full mr-2"></span>
                     {item.label}
                   </Link>
-                </li>
+                </motion.li>
               ))}
-              <li>
-                <Link
-                  href="/menu/breakfast"
-                  className="text-gray-400 hover:text-orange-500 transition-colors duration-300"
+              {['breakfast', 'lunch', 'dinner'].map((meal) => (
+                <motion.li 
+                  key={meal}
+                  whileHover={{ x: 5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
                 >
-                  {translations[currentLanguage].breakfast}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/menu/lunch"
-                  className="text-gray-400 hover:text-orange-500 transition-colors duration-300"
-                >
-                  {translations[currentLanguage].lunch}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/menu/dinner"
-                  className="text-gray-400 hover:text-orange-500 transition-colors duration-300"
-                >
-                  {translations[currentLanguage].dinner}
-                </Link>
-              </li>
+                  <Link
+                    href={`/menu/${meal}`}
+                    className="text-gray-300 hover:text-orange-500 transition-colors duration-300 flex items-center"
+                  >
+                    <span className="w-2 h-2 bg-orange-500 rounded-full mr-2"></span>
+                    {translations[currentLanguage][meal as keyof typeof translations[LanguageCode]]}
+                  </Link>
+                </motion.li>
+              ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Newsletter */}
-          <div>
+          <motion.div >
             <h3 className="text-lg font-semibold mb-4 border-b border-orange-600 pb-2">
               {translations[currentLanguage].newsletter}
             </h3>
-            <p className="text-gray-400 mb-4">
-              {translations[currentLanguage].newsletter}
+            <p className="text-gray-300 mb-4">
+              Stay updated with our latest offers and news.
             </p>
             <form onSubmit={handleSubscribe} className="flex flex-col space-y-3">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Your email address"
-                className="px-4 py-2 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-orange-600"
-                required
-              />
-              <button
+              <motion.div whileHover={{ scale: 1.01 }}>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Your email address"
+                  className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-orange-600 placeholder-gray-400"
+                  required
+                />
+              </motion.div>
+              <motion.button
                 type="submit"
-                className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-300"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
+                className="bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-700 hover:to-orange-600 text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 shadow-lg hover:shadow-orange-500/20"
               >
                 {translations[currentLanguage].subscribe}
-              </button>
+              </motion.button>
             </form>
-          </div>
+          </motion.div>
 
-          {/* Language and Social */}
-          <div className="space-y-6">
-            {/* Language Selector */}
-            <div className="relative inline-block">
-              <button
-                className="flex items-center space-x-1 px-4 py-2 bg-gray-800 rounded-lg text-white hover:bg-gray-700 transition-colors"
-                onClick={() => setIsLangOpen(!isLangOpen)}
-              >
-                {languages.find(lang => lang.code === currentLanguage)?.flag}
-                <span className="ml-1">
-                  {languages.find(lang => lang.code === currentLanguage)?.name}
-                </span>
-                <FiChevronDown className={`ml-1 transition-transform ${
-                  isLangOpen ? "rotate-180" : ""
-                }`} />
-              </button>
-
-              {isLangOpen && (
-                <div className="absolute bottom-full left-0 mb-2 w-full bg-gray-800 shadow-lg rounded-md py-1 z-10">
-                  {languages.map((lang) => (
-                    <button
-                      key={lang.code}
-                      className={`flex items-center w-full text-left px-4 py-2 text-sm ${
-                        currentLanguage === lang.code
-                          ? "bg-orange-600 text-white"
-                          : "text-gray-300 hover:bg-gray-700"
-                      }`}
-                      onClick={() => {
-                        dispatch(setLanguage(lang.code));
-                        setIsLangOpen(false);
-                      }}
-                    >
-                      {lang.flag}
-                      <span className="ml-2">{lang.name}</span>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Social Media */}
-            <div>
-              <h3 className="text-lg font-semibold mb-4 border-b border-orange-600 pb-2">
-                {translations[currentLanguage].followUs}
-              </h3>
-              <div className="flex space-x-4">
-                <a 
+          {/* Social Media */}
+          <motion.div  className="space-y-6">
+            <h3 className="text-lg font-semibold mb-4 border-b border-orange-600 pb-2">
+              {translations[currentLanguage].followUs}
+            </h3>
+            <div className="flex space-x-4">
+              {[
+                { icon: <FaFacebook className="w-6 h-6" />, color: "text-blue-400" },
+                { icon: <FaTwitter className="w-6 h-6" />, color: "text-blue-300" },
+                { icon: <FaInstagram className="w-6 h-6" />, color: "text-pink-400" },
+                { icon: <FaYoutube className="w-6 h-6" />, color: "text-red-500" }
+              ].map((social, index) => (
+                <motion.a 
+                  key={index}
                   href="https://facebook.com" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-orange-500 transition-colors duration-300"
+                  className={`${social.color} hover:text-white transition-colors duration-300`}
+                  whileHover={{ y: -3, scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
                 >
-                  <FaFacebook className="w-6 h-6" />
-                </a>
-                <a 
-                  href="https://twitter.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-orange-500 transition-colors duration-300"
-                >
-                  <FaTwitter className="w-6 h-6" />
-                </a>
-                <a 
-                  href="https://instagram.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-orange-500 transition-colors duration-300"
-                >
-                  <FaInstagram className="w-6 h-6" />
-                </a>
-                <a 
-                  href="https://youtube.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-orange-500 transition-colors duration-300"
-                >
-                  <FaYoutube className="w-6 h-6" />
-                </a>
-              </div>
+                  {social.icon}
+                </motion.a>
+              ))}
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Copyright */}
-        <div className="border-t border-gray-800 mt-8 pt-6 text-center text-gray-500 text-sm">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          className="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400 text-sm"
+        >
           <p>
             &copy; {new Date().getFullYear()} Sufi Bites. {translations[currentLanguage].rights}
           </p>
-        </div>
+        </motion.div>
       </div>
-    </footer>
+    </motion.footer>
   );
 };
 

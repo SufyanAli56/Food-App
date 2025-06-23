@@ -10,7 +10,6 @@ export function makeStore() {
     }
   });
 }
-
 // Correct type exports
 export type AppStore = ReturnType<typeof makeStore>;
 export type AppDispatch = AppStore['dispatch'];
