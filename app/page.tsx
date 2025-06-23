@@ -1,8 +1,11 @@
 import React from 'react'
+import Home from './Pages/home/Home'
 
 const page = () => {
   return (
-    <div className='bg-white my-3'>page</div>
+    <div >
+      <Home/>
+    </div>
   )
 }
 

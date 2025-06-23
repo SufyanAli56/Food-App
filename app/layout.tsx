@@ -4,6 +4,8 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import ProviderWrapper from './ProviderWrapper';
 import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer/Footer"; // Import your Footer component
+
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -23,10 +25,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${poppins.variable}`}>
-      <body className="antialiased">
+      <body className="antialiased flex flex-col min-h-screen">
         <ProviderWrapper>
           <Navbar/>
-          {children}
+          <main className="flex-grow">
+            {children}
+   
+          </main>
+          <Footer />
         </ProviderWrapper>
       </body>
     </html>
