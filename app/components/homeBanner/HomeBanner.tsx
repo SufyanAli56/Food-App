@@ -20,7 +20,6 @@ const HomeBanner = () => {
   // State management
   const [isMuted, setIsMuted] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
-  const [videoLoaded, setVideoLoaded] = useState(false);
   const [videoError, setVideoError] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -72,31 +71,30 @@ const HomeBanner = () => {
   useEffect(() => {
     if (videoRef.current) {
       const video = videoRef.current;
-      
-      // Try to play the video programmatically
+
       const playVideo = async () => {
         try {
           await video.play();
-          setVideoLoaded(true);
         } catch (err) {
           console.error('Video playback failed:', err);
           setVideoError(true);
         }
       };
-      
-      // Set up event listeners
-      video.addEventListener('loadeddata', () => {
+
+      const onLoadedData = () => {
         playVideo().catch(console.error);
-      });
-      
-      video.addEventListener('error', () => {
+      };
+
+      const onError = () => {
         setVideoError(true);
-      });
-      
-      // Cleanup
+      };
+
+      video.addEventListener('loadeddata', onLoadedData);
+      video.addEventListener('error', onError);
+
       return () => {
-        video.removeEventListener('loadeddata', () => {});
-        video.removeEventListener('error', () => {});
+        video.removeEventListener('loadeddata', onLoadedData);
+        video.removeEventListener('error', onError);
       };
     }
   }, []);
@@ -129,18 +127,15 @@ const HomeBanner = () => {
             playsInline
             className="absolute inset-0 w-full h-full object-cover"
           >
-            <source 
-              src="/Video.mp4" 
-              type="video/mp4" 
-            />
+            <source src="/Video.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         )}
       </div>
-      
+
       {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-black/70 z-10" />
-      
+
       {/* Content */}
       <div className="relative z-20 container mx-auto h-full flex flex-col justify-center items-start text-white px-4 md:px-8">
         <h1 className="text-4xl md:text-6xl font-bold mb-4 max-w-2xl">
@@ -155,7 +150,7 @@ const HomeBanner = () => {
               {translations[currentLanguage].menuButton}
             </button>
           </Link>
-          
+
           <Link href="/reservation">
             <button className="border-2 border-white text-white text-lg font-medium px-8 py-3 rounded-full hover:bg-white/10 transition-colors transform hover:scale-105 duration-300">
               {translations[currentLanguage].reservationButton}
@@ -163,7 +158,7 @@ const HomeBanner = () => {
           </Link>
         </div>
       </div>
-      
+
       {/* Mute Toggle Button */}
       <button
         onClick={toggleMute}
@@ -172,7 +167,7 @@ const HomeBanner = () => {
       >
         {isMuted ? <FiVolumeX size={24} /> : <FiVolume2 size={24} />}
       </button>
-      
+
       {/* Mobile Notice */}
       {isMobile && (
         <div className="absolute bottom-4 left-4 z-20 bg-black/70 text-white text-sm px-3 py-1 rounded">

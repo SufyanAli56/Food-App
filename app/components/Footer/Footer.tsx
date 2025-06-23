@@ -152,17 +152,17 @@ const Footer = () => {
     }
   };
 
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut"
-      }
-    }
-  };
+  // const itemVariants = {
+  //   hidden: { y: 20, opacity: 0 },
+  //   visible: {
+  //     y: 0,
+  //     opacity: 1,
+  //     transition: {
+  //       duration: 0.5,
+  //       ease: "easeOut"
+  //     }
+  //   }
+  // };
 
   if (!isMounted) return null;
 
@@ -215,7 +215,7 @@ const Footer = () => {
                 <motion.li 
                   key={item.href}
                   whileHover={{ x: 5 }}
-                  transition={{ type: "spring", stiffness: 300 }}
+                  // transition={{ type: "spring", stiffness: 300 }}
                 >
                   <Link
                     href={item.href}
