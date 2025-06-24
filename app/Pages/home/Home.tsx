@@ -1,3 +1,4 @@
+import MyDishes from '@/app/components/mydishes/MyDishes';
 import HomeBanner from '../../components/homeBanner/HomeBanner';
 
 export const metadata = {
@@ -9,7 +10,7 @@ export default function Home() {
   return (
     <main>
       <HomeBanner />
-      
+       <MyDishes/>
     
     </main>
   );
