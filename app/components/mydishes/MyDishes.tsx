@@ -90,11 +90,11 @@ const MyDishes = () => {
         </div>
 
         {/* Right: Dish Images */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-2 relative">
           <img
             src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=500&q=80"
             alt="Chicken Biryani"
-            className="rounded-lg shadow-lg"
+            className="rounded-lg shadow-lg ml-23"
           />
           <img
             src="https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?auto=format&fit=crop&w=500&q=80"

@@ -2,9 +2,13 @@
 import React from 'react';
 import { FaDrumstickBite, FaUtensils, FaStar, FaLeaf } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
-import type { RootState } from '../../lib/Store'; // Updated path
+import type { RootState } from '../../lib/Store'; // Adjust this path as needed
 
-// Type definitions
+// Define dish IDs as constant tuple
+const dishIds = ['chicken_biryani', 'nihari', 'seekh_kebabs', 'halwa_puri'] as const;
+type DishId = typeof dishIds[number];
+
+// Supported languages
 type LanguageCode = 'en' | 'ar' | 'fr' | 'es';
 
 interface DishTranslation {
@@ -13,11 +17,13 @@ interface DishTranslation {
   caption: string;
 }
 
+type LanguageTranslations = Record<DishId, DishTranslation>;
+
 interface DishTranslations {
-  en: Record<string, DishTranslation>;
-  ar: Record<string, DishTranslation>;
-  fr: Record<string, DishTranslation>;
-  es: Record<string, DishTranslation>;
+  en: LanguageTranslations;
+  ar: LanguageTranslations;
+  fr: LanguageTranslations;
+  es: LanguageTranslations;
 }
 
 const dishTranslations: DishTranslations = {
@@ -111,7 +117,7 @@ const dishTranslations: DishTranslations = {
   }
 };
 
-const dishKeys = [
+const dishKeys: { id: DishId; icon: JSX.Element }[] = [
   { id: 'chicken_biryani', icon: <FaDrumstickBite className="text-xl" /> },
   { id: 'nihari', icon: <FaUtensils className="text-xl" /> },
   { id: 'seekh_kebabs', icon: <FaStar className="text-xl" /> },
@@ -119,7 +125,7 @@ const dishKeys = [
 ];
 
 const TopDishesOverlay = () => {
-  const currentLanguage = useSelector((state: RootState) => state.language.currentLanguage);
+  const currentLanguage = useSelector((state: RootState) => state.language.currentLanguage as LanguageCode);
 
   const topDishes = dishKeys.map(dish => ({
     ...dish,
