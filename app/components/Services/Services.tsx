@@ -154,7 +154,7 @@ const Services: React.FC = () => {
   const currentTranslations = translations[currentLanguage];
 
   return (
-    <section className="py-16 bg-orange-50" id="services">
+    <section className="py-16 mt-24 bg-orange-50" id="services">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl sm:text-4xl font-bold text-center text-gray-800 mb-10">
           {currentTranslations.servicesTitle}
