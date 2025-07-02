@@ -61,7 +61,7 @@ const MyDishes = () => {
   const t = translations[currentLanguage];
 
   return (
-    <div className="w-full bg-white mx-auto px-4 md:px-8 py-12">
+    <div className="w-full bg-white mx-auto px-4 md:px-8 py-2">
       <h2 className="text-3xl font-bold text-center text-gray-900 mb-10">
         {t.heading}
         <div className="flex justify-center mt-2">
