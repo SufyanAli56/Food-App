@@ -1,6 +1,17 @@
 "use client";
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../lib/Store';
+
+type LanguageCode = 'en' | 'ar' | 'fr' | 'es';
+
+interface HeroTranslations {
+  en: Record<string, string>;
+  ar: Record<string, string>;
+  fr: Record<string, string>;
+  es: Record<string, string>;
+}
 
 type HeroBannerProps = {
   title: string;
@@ -41,6 +52,45 @@ const HeroBanner: React.FC<HeroBannerProps> = ({
   contentPosition = 'center',
   pattern = 'none'
 }) => {
+  // Redux hooks
+  const currentLanguage = useSelector((state: RootState) => state.language.currentLanguage);
+
+  // Translations
+  const translations: HeroTranslations = {
+    en: {
+      scrollText: "Scroll",
+      defaultHighlight: "Featured",
+      defaultSubtitle: "Discover our amazing offerings",
+      ctaPrimary: "Get Started",
+      ctaSecondary: "Learn More"
+    },
+    ar: {
+      scrollText: "انتقل",
+      defaultHighlight: "مميز",
+      defaultSubtitle: "اكتشف عروضنا المذهلة",
+      ctaPrimary: "ابدأ الآن",
+      ctaSecondary: "تعلم المزيد"
+    },
+    fr: {
+      scrollText: "Défiler",
+      defaultHighlight: "En vedette",
+      defaultSubtitle: "Découvrez nos offres incroyables",
+      ctaPrimary: "Commencer",
+      ctaSecondary: "Apprendre encore plus"
+    },
+    es: {
+      scrollText: "Desplazar",
+      defaultHighlight: "Destacado",
+      defaultSubtitle: "Descubre nuestras increíbles ofertas",
+      ctaPrimary: "Empezar",
+      ctaSecondary: "Aprende más"
+    }
+  };
+
+  // Use translated text if no specific text is provided
+  const actualHighlightText = highlightText || translations[currentLanguage].defaultHighlight;
+  const actualSubtitle = subtitle || translations[currentLanguage].defaultSubtitle;
+
   // Color mappings
   const textColorMap = {
     light: 'text-white',
@@ -125,14 +175,14 @@ const HeroBanner: React.FC<HeroBannerProps> = ({
             transition={{ duration: 0.8 }}
             className={`flex flex-col ${positionClasses[contentPosition]} justify-center ${textColorMap[textColor]} max-w-4xl mx-auto`}
           >
-            {highlightText && (
+            {actualHighlightText && (
               <motion.span
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2, duration: 0.5 }}
                 className={`inline-block px-4 py-2 ${highlightBgColorMap[highlightColor]} rounded-full text-sm font-medium mb-4 text-white tracking-wider`}
               >
-                {highlightText}
+                {actualHighlightText}
               </motion.span>
             )}
 
@@ -145,21 +195,21 @@ const HeroBanner: React.FC<HeroBannerProps> = ({
               {title.split('{highlight}').map((part, i) => (
                 <React.Fragment key={i}>
                   {part}
-                  {i < title.split('{highlight}').length - 1 && highlightText && (
-                    <span className={highlightColorMap[highlightColor]}>{highlightText}</span>
+                  {i < title.split('{highlight}').length - 1 && actualHighlightText && (
+                    <span className={highlightColorMap[highlightColor]}>{actualHighlightText}</span>
                   )}
                 </React.Fragment>
               ))}
             </motion.h1>
 
-            {subtitle && (
+            {actualSubtitle && (
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5, duration: 0.6 }}
                 className={`text-lg md:text-xl opacity-90 mb-8 ${contentPosition === 'center' ? 'mx-auto' : ''}`}
               >
-                {subtitle}
+                {actualSubtitle}
               </motion.p>
             )}
 
@@ -177,7 +227,7 @@ const HeroBanner: React.FC<HeroBannerProps> = ({
                     whileTap={{ scale: 0.95 }}
                     className={`px-8 py-3 ${buttonColorMap[highlightColor]} text-white font-medium rounded-lg transition-all duration-300 text-lg shadow-lg hover:shadow-xl flex items-center gap-2`}
                   >
-                    {ctaPrimary.text}
+                    {ctaPrimary.text || translations[currentLanguage].ctaPrimary}
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
                     </svg>
@@ -190,7 +240,7 @@ const HeroBanner: React.FC<HeroBannerProps> = ({
                     whileTap={{ scale: 0.95 }}
                     className={`px-8 py-3 bg-transparent border-2 ${borderColorMap[textColor]} hover:bg-white/10 font-medium rounded-lg transition-all duration-300 text-lg flex items-center gap-2`}
                   >
-                    {ctaSecondary.text}
+                    {ctaSecondary.text || translations[currentLanguage].ctaSecondary}
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M6.672 1.911a1 1 0 10-1.932.518l.259.966a1 1 0 001.932-.518l-.26-.966zM2.429 4.74a1 1 0 10-.517 1.932l.966.259a1 1 0 00.517-1.932l-.966-.26zm8.814-.569a1 1 0 00-1.415-1.414l-.707.707a1 1 0 101.415 1.415l.707-.708zm-7.071 7.072l.707-.707A1 1 0 003.465 9.12l-.708.707a1 1 0 001.415 1.415zm3.2-5.171a1 1 0 00-1.3 1.3l4 10a1 1 0 001.823.075l1.38-2.759 3.018 3.02a1 1 0 001.414-1.415l-3.019-3.02 2.76-1.379a1 1 0 00-.076-1.822l-10-4z" clipRule="evenodd" />
                     </svg>
@@ -222,7 +272,9 @@ const HeroBanner: React.FC<HeroBannerProps> = ({
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
               </svg>
             </div>
-            <span className="text-xs text-white opacity-70">Scroll</span>
+            <span className="text-xs text-white opacity-70">
+              {translations[currentLanguage].scrollText}
+            </span>
           </div>
         </motion.div>
       )}

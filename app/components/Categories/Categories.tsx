@@ -1,6 +1,26 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../lib/Store';
+
+// Type definitions
+type LanguageCode = 'en' | 'ar' | 'fr' | 'es';
+
+type TranslationKey = 'title' | 'tagline' | 'searchPlaceholder' | 'cartTitle' | 
+                     'clearCart' | 'emptyCartTitle' | 'emptyCartSubtitle' | 
+                     'checkoutButton' | 'ingredientsLabel' | 'spicyLevels' | 
+                     'prepTime' | 'addToCart' | 'noDishesTitle' | 'noDishesSubtitle' | 
+                     'clearFilters' | 'footerRights' | 'footerTagline' | 
+                     'categories' | 'spicyLabels' | 'notificationAdded' | 
+                     'notificationRemoved' | 'notificationReduced' | 'notificationCleared';
+
+interface Translations {
+  en: Record<TranslationKey, string | string[]>;
+  ar: Record<TranslationKey, string | string[]>;
+  fr: Record<TranslationKey, string | string[]>;
+  es: Record<TranslationKey, string | string[]>;
+}
 
 interface MenuItem {
   id: number;
@@ -24,6 +44,273 @@ const Categories: React.FC = () => {
   const [notification, setNotification] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
+  
+  // Redux hooks
+  const currentLanguage = useSelector((state: RootState) => state.language.currentLanguage);
+
+  // Translations
+  const translations: Translations = {
+    en: {
+      title: "Sufi Cuisine",
+      tagline: "Where every bite takes you on a spiritual journey",
+      searchPlaceholder: "Search dishes or ingredients...",
+      cartTitle: "Your Order",
+      clearCart: "Clear All",
+      emptyCartTitle: "Your cart is empty",
+      emptyCartSubtitle: "Add some delicious Sufi dishes to get started!",
+      checkoutButton: "Proceed to Checkout",
+      ingredientsLabel: "Ingredients:",
+      spicyLevels: JSON.stringify(["Mild", "Medium", "Hot"]),
+      prepTime: "mins",
+      addToCart: "Add to Cart",
+      noDishesTitle: "No dishes found",
+      noDishesSubtitle: "Try adjusting your search or filter criteria",
+      clearFilters: "Clear filters",
+      footerRights: "© {year} Sufi Cuisine. All rights reserved.",
+      footerTagline: "Experience the taste of spiritual tradition",
+      categories: JSON.stringify([
+        "All Dishes",
+        "Traditional Sufi Dishes",
+        "Vegetarian Delights",
+        "Grill & BBQ",
+        "Healthy Bowls",
+        "Sufi Sweets",
+        "Spiritual Sips"
+      ]),
+      spicyLabels: JSON.stringify(["Not Spicy", "Mild", "Medium", "Hot", "Very Hot"]),
+      notificationAdded: "{item} added to cart!",
+      notificationRemoved: "{item} removed from cart!",
+      notificationReduced: "{item} quantity reduced from cart!",
+      notificationCleared: "Cart cleared!"
+    },
+    ar: {
+      title: "المطبخ الصوفي",
+      tagline: "حيث تأخذك كل قضمة في رحلة روحية",
+      searchPlaceholder: "ابحث عن الأطباق أو المكونات...",
+      cartTitle: "طلبك",
+      clearCart: "مسح الكل",
+      emptyCartTitle: "سلة التسوق فارغة",
+      emptyCartSubtitle: "أضف بعض الأطباق الصوفية اللذيذة للبدء!",
+      checkoutButton: "الانتقال إلى الدفع",
+      ingredientsLabel: "المكونات:",
+      spicyLevels: JSON.stringify(["خفيف", "متوسط", "حار"]),
+      prepTime: "دقيقة",
+      addToCart: "أضف إلى السلة",
+      noDishesTitle: "لا توجد أطباق",
+      noDishesSubtitle: "حاول تعديل معايير البحث أو التصفية",
+      clearFilters: "مسح الفلاتر",
+      footerRights: "© {year} المطبخ الصوفي. جميع الحقوق محفوظة.",
+      footerTagline: "جرب طعم التقاليد الروحية",
+      categories: JSON.stringify([
+        "جميع الأطباق",
+        "أطباق صوفية تقليدية",
+        "أطباق نباتية",
+        "مشويات",
+        "أطباق صحية",
+        "حلويات صوفية",
+        "مشروبات روحية"
+      ]),
+      spicyLabels: JSON.stringify(["غير حار", "خفيف", "متوسط", "حار", "حار جدًا"]),
+      notificationAdded: "تم إضافة {item} إلى السلة!",
+      notificationRemoved: "تم إزالة {item} من السلة!",
+      notificationReduced: "تم تقليل كمية {item} من السلة!",
+      notificationCleared: "تم تفريغ السلة!"
+    },
+    fr: {
+      title: "Cuisine Soufie",
+      tagline: "Où chaque bouchée vous emmène dans un voyage spirituel",
+      searchPlaceholder: "Rechercher des plats ou ingrédients...",
+      cartTitle: "Votre Commande",
+      clearCart: "Tout effacer",
+      emptyCartTitle: "Votre panier est vide",
+      emptyCartSubtitle: "Ajoutez de délicieux plats soufis pour commencer!",
+      checkoutButton: "Passer à la caisse",
+      ingredientsLabel: "Ingrédients:",
+      spicyLevels: JSON.stringify(["Doux", "Moyen", "Épicé"]),
+      prepTime: "min",
+      addToCart: "Ajouter au panier",
+      noDishesTitle: "Aucun plat trouvé",
+      noDishesSubtitle: "Essayez d'ajuster vos critères de recherche ou de filtrage",
+      clearFilters: "Effacer les filtres",
+      footerRights: "© {year} Cuisine Soufie. Tous droits réservés.",
+      footerTagline: "Découvrez le goût de la tradition spirituelle",
+      categories: JSON.stringify([
+        "Tous les plats",
+        "Plats soufis traditionnels",
+        "Délices végétariens",
+        "Grillades",
+        "Bol sains",
+        "Desserts soufis",
+        "Boissons spirituelles"
+      ]),
+      spicyLabels: JSON.stringify(["Non épicé", "Doux", "Moyen", "Épicé", "Très épicé"]),
+      notificationAdded: "{item} ajouté au panier!",
+      notificationRemoved: "{item} retiré du panier!",
+      notificationReduced: "Quantité de {item} réduite du panier!",
+      notificationCleared: "Panier vidé!"
+    },
+    es: {
+      title: "Cocina Sufí",
+      tagline: "Donde cada bocado te lleva en un viaje espiritual",
+      searchPlaceholder: "Buscar platos o ingredientes...",
+      cartTitle: "Tu Pedido",
+      clearCart: "Limpiar Todo",
+      emptyCartTitle: "Tu carrito está vacío",
+      emptyCartSubtitle: "¡Añade algunos deliciosos platos sufíes para comenzar!",
+      checkoutButton: "Proceder al Pago",
+      ingredientsLabel: "Ingredientes:",
+      spicyLevels: JSON.stringify(["Suave", "Medio", "Picante"]),
+      prepTime: "min",
+      addToCart: "Añadir al Carrito",
+      noDishesTitle: "No se encontraron platos",
+      noDishesSubtitle: "Intenta ajustar tus criterios de búsqueda o filtrado",
+      clearFilters: "Limpiar filtros",
+      footerRights: "© {year} Cocina Sufí. Todos los derechos reservados.",
+      footerTagline: "Experimenta el sabor de la tradición espiritual",
+      categories: JSON.stringify([
+        "Todos los Platos",
+        "Platos Sufíes Tradicionales",
+        "Delicias Vegetarianas",
+        "Parrilla y BBQ",
+        "Platos Saludables",
+        "Dulces Sufíes",
+        "Bebidas Espirituales"
+      ]),
+      spicyLabels: JSON.stringify(["No picante", "Suave", "Medio", "Picante", "Muy picante"]),
+      notificationAdded: "¡{item} añadido al carrito!",
+      notificationRemoved: "¡{item} eliminado del carrito!",
+      notificationReduced: "¡Cantidad de {item} reducida del carrito!",
+      notificationCleared: "¡Carrito vaciado!"
+    }
+  };
+
+  // Helper function to parse stringified arrays
+  const getTranslatedArray = (key: TranslationKey): string[] => {
+    const value = translations[currentLanguage][key];
+    return typeof value === 'string' ? JSON.parse(value) : value;
+  };
+
+  const menuItems: MenuItem[] = [
+    {
+      id: 1,
+      emoji: '🥘',
+      name: currentLanguage === 'en' ? 'Nihari' : 
+            currentLanguage === 'ar' ? 'نهاري' :
+            currentLanguage === 'fr' ? 'Nihari' : 'Nihari',
+      category: getTranslatedArray('categories')[1],
+      photo: '/Nahiri-img.jpeg',
+      ingredients: currentLanguage === 'en' ? ['Beef shank', 'Nihari masala', 'Ginger', 'Wheat flour', 'Ghee'] :
+               currentLanguage === 'ar' ? ['لحم بقري', 'بهارات النهاري', 'زنجبيل', 'طحين القمح', 'سمن'] :
+               currentLanguage === 'fr' ? ['Jarret de bœuf', 'Masala Nihari', 'Gingembre', 'Farine de blé', 'Ghee'] :
+               ['Falda de res', 'Masala Nihari', 'Jengibre', 'Harina de trigo', 'Ghee'],
+      price: 12.99,
+      spicyLevel: 3,
+      preparationTime: 240,
+      rating: 4.8
+    },
+    {
+      id: 2,
+      emoji: '🥘',
+      name: currentLanguage === 'en' ? 'Haleem' : 
+            currentLanguage === 'ar' ? 'حليم' :
+            currentLanguage === 'fr' ? 'Haleem' : 'Haleem',
+      category: getTranslatedArray('categories')[1],
+      photo: '/haleem.jpeg',
+      ingredients: currentLanguage === 'en' ? ['Wheat', 'Barley', 'Lentils', 'Beef', 'Spices'] :
+               currentLanguage === 'ar' ? ['قمح', 'شعير', 'عدس', 'لحم بقري', 'بهارات'] :
+               currentLanguage === 'fr' ? ['Blé', 'Orge', 'Lentilles', 'Bœuf', 'Épices'] :
+               ['Trigo', 'Cebada', 'Lentejas', 'Carne de res', 'Especias'],
+      price: 10.99,
+      spicyLevel: 2,
+      preparationTime: 180,
+      rating: 4.6
+    },
+    {
+      id: 3,
+      emoji: '🍲',
+      name: currentLanguage === 'en' ? 'Vegetable Biryani' : 
+            currentLanguage === 'ar' ? 'برياني الخضار' :
+            currentLanguage === 'fr' ? 'Biryani aux légumes' : 'Biryani de verduras',
+      category: getTranslatedArray('categories')[2],
+      photo: '/brayniii.jpeg',
+      ingredients: currentLanguage === 'en' ? ['Basmati rice', 'Mixed vegetables', 'Yogurt', 'Biryani masala', 'Saffron'] :
+               currentLanguage === 'ar' ? ['أرز بسمتي', 'خضار مشكلة', 'زبادي', 'بهارات البرياني', 'زعفران'] :
+               currentLanguage === 'fr' ? ['Riz basmati', 'Légumes mélangés', 'Yaourt', 'Masala biryani', 'Safran'] :
+               ['Arroz basmati', 'Verduras mixtas', 'Yogur', 'Masala biryani', 'Azafrán'],
+      price: 9.99,
+      spicyLevel: 2,
+      preparationTime: 60,
+      rating: 4.5
+    },
+    {
+      id: 4,
+      emoji: '🍢',
+      name: currentLanguage === 'en' ? 'Chicken Seekh Kebab' : 
+            currentLanguage === 'ar' ? 'سيخ كباب دجاج' :
+            currentLanguage === 'fr' ? 'Seekh kebab au poulet' : 'Seekh kebab de pollo',
+      category: getTranslatedArray('categories')[3],
+      photo: '/kabab.jpeg',
+      ingredients: currentLanguage === 'en' ? ['Minced chicken', 'Onions', 'Garlic', 'Coriander', 'Garam masala'] :
+               currentLanguage === 'ar' ? ['دجاج مفروم', 'بصل', 'ثوم', 'كزبرة', 'بهارات غارام ماسالا'] :
+               currentLanguage === 'fr' ? ['Poulet haché', 'Oignons', 'Ail', 'Coriandre', 'Garam masala'] :
+               ['Pollo picado', 'Cebollas', 'Ajo', 'Cilantro', 'Garam masala'],
+      price: 8.99,
+      spicyLevel: 3,
+      preparationTime: 30,
+      rating: 4.7
+    },
+    {
+      id: 5,
+      emoji: '🥗',
+      name: currentLanguage === 'en' ? 'Quinoa Bowl' : 
+            currentLanguage === 'ar' ? 'طبق الكينوا' :
+            currentLanguage === 'fr' ? 'Bol de quinoa' : 'Tazón de quinoa',
+      category: getTranslatedArray('categories')[4],
+      photo: '/Bowel.jpeg',
+      ingredients: currentLanguage === 'en' ? ['Quinoa', 'Avocado', 'Cherry tomatoes', 'Kale', 'Lemon dressing'] :
+               currentLanguage === 'ar' ? ['كينوا', 'أفوكادو', 'طماطم كرزية', 'كرنب', 'صوص ليمون'] :
+               currentLanguage === 'fr' ? ['Quinoa', 'Avocat', 'Tomates cerises', 'Kale', 'Vinaigrette au citron'] :
+               ['Quinoa', 'Aguacate', 'Tomates cherry', 'Col rizada', 'Aderezo de limón'],
+      price: 11.99,
+      spicyLevel: 1,
+      preparationTime: 20,
+      rating: 4.3
+    },
+    {
+      id: 6,
+      emoji: '🍰',
+      name: currentLanguage === 'en' ? 'Gajar Halwa' : 
+            currentLanguage === 'ar' ? 'حلوى الجزر' :
+            currentLanguage === 'fr' ? 'Gajar halwa' : 'Gajar halwa',
+      category: getTranslatedArray('categories')[5],
+      photo: '/Gajar Halwa.jpeg',
+      ingredients: currentLanguage === 'en' ? ['Carrots', 'Milk', 'Sugar', 'Ghee', 'Nuts'] :
+               currentLanguage === 'ar' ? ['جزر', 'حليب', 'سكر', 'سمن', 'مكسرات'] :
+               currentLanguage === 'fr' ? ['Carottes', 'Lait', 'Sucre', 'Ghee', 'Noix'] :
+               ['Zanahorias', 'Leche', 'Azúcar', 'Ghee', 'Frutos secos'],
+      price: 6.99,
+      spicyLevel: 0,
+      preparationTime: 90,
+      rating: 4.9
+    },
+    {
+      id: 7,
+      emoji: '🫖',
+      name: currentLanguage === 'en' ? 'Sufi Kahwa' : 
+            currentLanguage === 'ar' ? 'قهوة صوفية' :
+            currentLanguage === 'fr' ? 'Kahwa soufie' : 'Kahwa sufí',
+      category: getTranslatedArray('categories')[6],
+      photo: '/Sufi Kahwa.jpeg',
+      ingredients: currentLanguage === 'en' ? ['Green tea', 'Saffron', 'Cardamom', 'Cinnamon', 'Almonds'] :
+               currentLanguage === 'ar' ? ['شاي أخضر', 'زعفران', 'هيل', 'قرفة', 'لوز'] :
+               currentLanguage === 'fr' ? ['Thé vert', 'Safran', 'Cardamome', 'Cannelle', 'Amandes'] :
+               ['Té verde', 'Azafrán', 'Cardamomo', 'Canela', 'Almendras'],
+      price: 4.99,
+      spicyLevel: 1,
+      preparationTime: 15,
+      rating: 4.7
+    }
+  ];
 
   useEffect(() => {
     // Load cart from localStorage if available
@@ -37,103 +324,6 @@ const Categories: React.FC = () => {
     // Save cart to localStorage whenever it changes
     localStorage.setItem('sufiCuisineCart', JSON.stringify(cart));
   }, [cart]);
-
-  const menuItems: MenuItem[] = [
-    {
-      id: 1,
-      emoji: '🥘',
-      name: 'Nihari',
-      category: 'Traditional Sufi Dishes',
-      photo: '/Nahiri-img.jpeg',
-      ingredients: ['Beef shank', 'Nihari masala', 'Ginger', 'Wheat flour', 'Ghee'],
-      price: 12.99,
-      spicyLevel: 3,
-      preparationTime: 240,
-      rating: 4.8
-    },
-    {
-      id: 2,
-      emoji: '🥘',
-      name: 'Haleem',
-      category: 'Traditional Sufi Dishes',
-      photo: '/haleem.jpeg',
-      ingredients: ['Wheat', 'Barley', 'Lentils', 'Beef', 'Spices'],
-      price: 10.99,
-      spicyLevel: 2,
-      preparationTime: 180,
-      rating: 4.6
-    },
-    {
-      id: 3,
-      emoji: '🍲',
-      name: 'Vegetable Biryani',
-      category: 'Vegetarian Delights',
-      photo: '/brayniii.jpeg',
-      ingredients: ['Basmati rice', 'Mixed vegetables', 'Yogurt', 'Biryani masala', 'Saffron'],
-      price: 9.99,
-      spicyLevel: 2,
-      preparationTime: 60,
-      rating: 4.5
-    },
-    {
-      id: 4,
-      emoji: '🍢',
-      name: 'Chicken Seekh Kebab',
-      category: 'Grill & BBQ',
-      photo: '/kabab.jpeg',
-      ingredients: ['Minced chicken', 'Onions', 'Garlic', 'Coriander', 'Garam masala'],
-      price: 8.99,
-      spicyLevel: 3,
-      preparationTime: 30,
-      rating: 4.7
-    },
-    {
-      id: 5,
-      emoji: '🥗',
-      name: 'Quinoa Bowl',
-      category: 'Healthy Bowls',
-      photo: '/Bowel.jpeg',
-      ingredients: ['Quinoa', 'Avocado', 'Cherry tomatoes', 'Kale', 'Lemon dressing'],
-      price: 11.99,
-      spicyLevel: 1,
-      preparationTime: 20,
-      rating: 4.3
-    },
-    {
-      id: 6,
-      emoji: '🍰',
-      name: 'Gajar Halwa',
-      category: 'Sufi Sweets',
-      photo: '/Gajar Halwa.jpeg',
-      ingredients: ['Carrots', 'Milk', 'Sugar', 'Ghee', 'Nuts'],
-      price: 6.99,
-      spicyLevel: 0,
-      preparationTime: 90,
-      rating: 4.9
-    },
-    {
-      id: 7,
-      emoji: '🫖',
-      name: 'Sufi Kahwa',
-      category: 'Spiritual Sips',
-      photo: '/Sufi Kahwa.jpeg',
-      ingredients: ['Green tea', 'Saffron', 'Cardamom', 'Cinnamon', 'Almonds'],
-      price: 4.99,
-      spicyLevel: 1,
-      preparationTime: 15,
-      rating: 4.7
-    }
-  ];
-
-  const categories = [
-    'All Dishes',
-    'Traditional Sufi Dishes',
-    'Vegetarian Delights',
-    'Grill & BBQ',
-    'Healthy Bowls',
-    'Sufi Sweets',
-    'Spiritual Sips'
-  ];
 
   const handleAddToCart = (item: MenuItem) => {
     setCart(prevCart => {
@@ -149,7 +339,9 @@ const Categories: React.FC = () => {
       }
     });
 
-    setNotification(`${item.name} added to cart!`);
+    setNotification(
+      translations[currentLanguage].notificationAdded.toString().replace('{item}', item.name)
+    );
     setTimeout(() => setNotification(null), 3000);
   };
 
@@ -173,14 +365,17 @@ const Categories: React.FC = () => {
 
     const removedItem = menuItems.find(item => item.id === itemId);
     if (removedItem) {
-      setNotification(`${removedItem.name} ${removeAll ? 'removed' : 'quantity reduced'} from cart!`);
+      const notificationKey = removeAll ? 'notificationRemoved' : 'notificationReduced';
+      setNotification(
+        translations[currentLanguage][notificationKey].toString().replace('{item}', removedItem.name)
+      );
       setTimeout(() => setNotification(null), 3000);
     }
   };
 
   const handleClearCart = () => {
     setCart([]);
-    setNotification('Cart cleared!');
+    setNotification(translations[currentLanguage].notificationCleared.toString());
     setTimeout(() => setNotification(null), 3000);
   };
 
@@ -190,7 +385,7 @@ const Categories: React.FC = () => {
   };
 
   const filteredItems = menuItems.filter(item => {
-    const matchesCategory = !activeCategory || activeCategory === 'All Dishes' || item.category === activeCategory;
+    const matchesCategory = !activeCategory || activeCategory === getTranslatedArray('categories')[0] || item.category === activeCategory;
     const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
                          item.ingredients.some(ing => ing.toLowerCase().includes(searchTerm.toLowerCase()));
     return matchesCategory && matchesSearch;
@@ -216,7 +411,7 @@ const Categories: React.FC = () => {
             fill="currentColor"
             viewBox="0 0 20 20"
           >
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+            <path d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         ))}
         <span className="text-xs text-gray-500 ml-1">({rating})</span>
@@ -236,8 +431,12 @@ const Categories: React.FC = () => {
 
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-amber-800 mb-2 font-serif">Sufi Cuisine</h1>
-          <p className="text-lg text-gray-600 italic">"Where every bite takes you on a spiritual journey"</p>
+          <h1 className="text-4xl font-bold text-amber-800 mb-2 font-serif">
+            {translations[currentLanguage].title.toString()}
+          </h1>
+          <p className="text-lg text-gray-600 italic">
+            {translations[currentLanguage].tagline.toString()}
+          </p>
         </div>
 
         {/* Search and Filter */}
@@ -246,7 +445,7 @@ const Categories: React.FC = () => {
             <div className="relative flex-grow">
               <input
                 type="text"
-                placeholder="Search dishes or ingredients..."
+                placeholder={translations[currentLanguage].searchPlaceholder.toString()}
                 className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-300"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -261,7 +460,7 @@ const Categories: React.FC = () => {
               </svg>
             </div>
             <div className="flex overflow-x-auto pb-2 md:pb-0 gap-2">
-              {categories.map((category) => (
+              {getTranslatedArray('categories').map((category) => (
                 <button
                   key={category}
                   onClick={() => setActiveCategory(category === activeCategory ? null : category)}
@@ -282,7 +481,7 @@ const Categories: React.FC = () => {
         <div className="bg-white rounded-lg shadow-md p-4 mb-8 sticky top-32 z-10">
           <div className="flex justify-between items-center mb-2">
             <h3 className="text-xl font-semibold text-gray-800">
-              Your Order ({cart.reduce((total, item) => total + item.quantity, 0)} items)
+              {translations[currentLanguage].cartTitle.toString()} ({cart.reduce((total, item) => total + item.quantity, 0)} items)
             </h3>
             <div className="flex items-center gap-4">
               <span className="text-lg font-bold text-amber-600">
@@ -293,7 +492,7 @@ const Categories: React.FC = () => {
                   onClick={handleClearCart}
                   className="text-red-500 hover:text-red-700 text-sm font-medium"
                 >
-                  Clear All
+                  {translations[currentLanguage].clearCart.toString()}
                 </button>
               )}
             </div>
@@ -348,7 +547,7 @@ const Categories: React.FC = () => {
                 </div>
               ))}
               <button className="w-full mt-4 bg-amber-600 hover:bg-amber-700 text-white py-3 px-6 rounded-lg font-medium transition-colors shadow-md">
-                Proceed to Checkout
+                {translations[currentLanguage].checkoutButton.toString()}
               </button>
             </div>
           ) : (
@@ -356,8 +555,8 @@ const Categories: React.FC = () => {
               <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
-              <p className="mt-2">Your cart is empty</p>
-              <p className="text-sm">Add some delicious Sufi dishes to get started!</p>
+              <p className="mt-2">{translations[currentLanguage].emptyCartTitle.toString()}</p>
+              <p className="text-sm">{translations[currentLanguage].emptyCartSubtitle.toString()}</p>
             </div>
           )}
         </div>
@@ -386,7 +585,7 @@ const Categories: React.FC = () => {
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-red-500 mr-1" viewBox="0 0 20 20" fill="currentColor">
                           <path fillRule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clipRule="evenodd" />
                         </svg>
-                        {item.spicyLevel === 1 ? 'Mild' : item.spicyLevel === 2 ? 'Medium' : 'Hot'}
+                        {getTranslatedArray('spicyLabels')[item.spicyLevel]}
                       </div>
                     )}
                     {item.preparationTime && (
@@ -394,7 +593,7 @@ const Categories: React.FC = () => {
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-amber-600 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        {item.preparationTime} mins
+                        {item.preparationTime} {translations[currentLanguage].prepTime.toString()}
                       </div>
                     )}
                   </div>
@@ -409,7 +608,9 @@ const Categories: React.FC = () => {
                         {item.rating && renderRatingStars(item.rating)}
                         {item.spicyLevel && renderSpicyLevel(item.spicyLevel)}
                       </div>
-                      <h4 className="text-sm font-medium text-gray-600 mb-1">Ingredients:</h4>
+                      <h4 className="text-sm font-medium text-gray-600 mb-1">
+                        {translations[currentLanguage].ingredientsLabel.toString()}
+                      </h4>
                       <p className="text-sm text-gray-500 line-clamp-2">
                         {item.ingredients.join(', ')}
                       </p>
@@ -422,7 +623,7 @@ const Categories: React.FC = () => {
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                       </svg>
-                      Add to Cart
+                      {translations[currentLanguage].addToCart.toString()}
                     </button>
                   </div>
                 </div>
@@ -432,8 +633,12 @@ const Categories: React.FC = () => {
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <h3 className="text-xl font-medium text-gray-600 mt-4">No dishes found</h3>
-                <p className="text-gray-500 mt-2">Try adjusting your search or filter criteria</p>
+                <h3 className="text-xl font-medium text-gray-600 mt-4">
+                  {translations[currentLanguage].noDishesTitle.toString()}
+                </h3>
+                <p className="text-gray-500 mt-2">
+                  {translations[currentLanguage].noDishesSubtitle.toString()}
+                </p>
                 <button 
                   onClick={() => {
                     setSearchTerm('');
@@ -441,7 +646,7 @@ const Categories: React.FC = () => {
                   }}
                   className="mt-4 text-amber-600 hover:text-amber-800 font-medium"
                 >
-                  Clear filters
+                  {translations[currentLanguage].clearFilters.toString()}
                 </button>
               </div>
             )}
@@ -450,8 +655,12 @@ const Categories: React.FC = () => {
 
         {/* Footer */}
         <div className="text-center text-gray-500 text-sm py-8 border-t">
-          <p>© {new Date().getFullYear()} Sufi Cuisine. All rights reserved.</p>
-          <p className="mt-1">Experience the taste of spiritual tradition</p>
+          <p>
+            {translations[currentLanguage].footerRights.toString().replace('{year}', new Date().getFullYear().toString())}
+          </p>
+          <p className="mt-1">
+            {translations[currentLanguage].footerTagline.toString()}
+          </p>
         </div>
       </div>
     </div>
