@@ -5,7 +5,8 @@ import React from 'react';
 import Categories from '../components/Categories/Categories';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../lib/Store';
-import HeroBanner from '../components/HeroBanner/HeroBanner';
+import HeroBanner from '../components/heroBanner/HeroBanner';
+
 
 // Type definitions
 type LanguageCode = 'en' | 'ar' | 'fr' | 'es';
