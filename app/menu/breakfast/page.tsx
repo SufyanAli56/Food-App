@@ -4,6 +4,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/app/lib/Store';
 import HeroBanner from '@/app/components/HeroBanner/HeroBanner';
+import BreakfastMenu from '@/app/components/BreakfastMenu/BreakfastMenu';
+
+
 
 type LanguageCode = 'en' | 'ar' | 'fr' | 'es';
 
@@ -61,7 +64,8 @@ export default function BreakfastPage() {
   const currentTranslations = translations[currentLanguage];
 
   return (
-    <div className='bg-white'>
+  <>
+   <div className='bg-white'>
       <HeroBanner
         title={currentTranslations.title.replace('{highlight}', currentTranslations.highlightText)}
         subtitle={currentTranslations.subtitle}
@@ -77,6 +81,8 @@ export default function BreakfastPage() {
         }}
         showScrollIndicator={false}
       />
+      <BreakfastMenu/>
     </div>
+  </>
   );
 }
