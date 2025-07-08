@@ -1,4 +1,3 @@
-// components/Footer/Footer.tsx
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
@@ -140,30 +139,6 @@ const Footer = () => {
     setEmail('');
   };
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
-  };
-
-  // const itemVariants = {
-  //   hidden: { y: 20, opacity: 0 },
-  //   visible: {
-  //     y: 0,
-  //     opacity: 1,
-  //     transition: {
-  //       duration: 0.5,
-  //       ease: "easeOut"
-  //     }
-  //   }
-  // };
-
   if (!isMounted) return null;
 
   return (
@@ -171,23 +146,18 @@ const Footer = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="bg-gradient-to-b from-gray-900 to-gray-800 text-white pt-12 pb-6"
+      className="bg-black text-white pt-12 pb-6"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Logo and Description */}
-          <motion.div className="space-y-4">
+          <div className="space-y-4">
             <motion.div 
               whileHover={{ scale: 1.02 }}
               className="flex items-center space-x-2"
             >
-              <GiFoodTruck className="text-3xl text-orange-500" />
-              <span className="text-2xl font-extrabold text-orange-600 tracking-tight">
+              <GiFoodTruck className="text-3xl text-red-600" />
+              <span className="text-2xl font-extrabold text-red-600 tracking-tight">
                 Sufi Bites
               </span>
             </motion.div>
@@ -203,11 +173,11 @@ const Footer = () => {
             <p className="text-gray-300">
               {translations[currentLanguage].email}
             </p>
-          </motion.div>
+          </div>
 
           {/* Quick Links */}
-          <motion.div >
-            <h3 className="text-lg font-semibold mb-4 border-b border-orange-600 pb-2">
+          <div>
+            <h3 className="text-lg font-semibold mb-4 border-b border-red-600 pb-2 text-white">
               {translations[currentLanguage].links}
             </h3>
             <ul className="space-y-3">
@@ -215,13 +185,12 @@ const Footer = () => {
                 <motion.li 
                   key={item.href}
                   whileHover={{ x: 5 }}
-                  // transition={{ type: "spring", stiffness: 300 }}
                 >
                   <Link
                     href={item.href}
-                    className="text-gray-300 hover:text-orange-500 transition-colors duration-300 flex items-center"
+                    className="text-gray-300 hover:text-red-500 transition-colors duration-300 flex items-center"
                   >
-                    <span className="w-2 h-2 bg-orange-500 rounded-full mr-2"></span>
+                    <span className="w-2 h-2 bg-red-600 rounded-full mr-2"></span>
                     {item.label}
                   </Link>
                 </motion.li>
@@ -230,23 +199,22 @@ const Footer = () => {
                 <motion.li 
                   key={meal}
                   whileHover={{ x: 5 }}
-                  transition={{ type: "spring", stiffness: 300 }}
                 >
                   <Link
                     href={`/menu/${meal}`}
-                    className="text-gray-300 hover:text-orange-500 transition-colors duration-300 flex items-center"
+                    className="text-gray-300 hover:text-red-500 transition-colors duration-300 flex items-center"
                   >
-                    <span className="w-2 h-2 bg-orange-500 rounded-full mr-2"></span>
+                    <span className="w-2 h-2 bg-red-600 rounded-full mr-2"></span>
                     {translations[currentLanguage][meal as keyof typeof translations[LanguageCode]]}
                   </Link>
                 </motion.li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
           {/* Newsletter */}
-          <motion.div >
-            <h3 className="text-lg font-semibold mb-4 border-b border-orange-600 pb-2">
+          <div>
+            <h3 className="text-lg font-semibold mb-4 border-b border-red-600 pb-2 text-white">
               {translations[currentLanguage].newsletter}
             </h3>
             <p className="text-gray-300 mb-4">
@@ -259,7 +227,7 @@ const Footer = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Your email address"
-                  className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-orange-600 placeholder-gray-400"
+                  className="w-full px-4 py-2 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-red-600 placeholder-gray-400"
                   required
                 />
               </motion.div>
@@ -267,31 +235,31 @@ const Footer = () => {
                 type="submit"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
-                className="bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-700 hover:to-orange-600 text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 shadow-lg hover:shadow-orange-500/20"
+                className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 shadow-lg hover:shadow-red-500/20"
               >
                 {translations[currentLanguage].subscribe}
               </motion.button>
             </form>
-          </motion.div>
+          </div>
 
           {/* Social Media */}
-          <motion.div  className="space-y-6">
-            <h3 className="text-lg font-semibold mb-4 border-b border-orange-600 pb-2">
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold mb-4 border-b border-red-600 pb-2 text-white">
               {translations[currentLanguage].followUs}
             </h3>
             <div className="flex space-x-4">
               {[
-                { icon: <FaFacebook className="w-6 h-6" />, color: "text-blue-400" },
-                { icon: <FaTwitter className="w-6 h-6" />, color: "text-blue-300" },
-                { icon: <FaInstagram className="w-6 h-6" />, color: "text-pink-400" },
-                { icon: <FaYoutube className="w-6 h-6" />, color: "text-red-500" }
+                { icon: <FaFacebook className="w-6 h-6" />, color: "hover:text-red-500" },
+                { icon: <FaTwitter className="w-6 h-6" />, color: "hover:text-red-500" },
+                { icon: <FaInstagram className="w-6 h-6" />, color: "hover:text-red-500" },
+                { icon: <FaYoutube className="w-6 h-6" />, color: "hover:text-red-500" }
               ].map((social, index) => (
                 <motion.a 
                   key={index}
-                  href="https://facebook.com" 
+                  href="#" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className={`${social.color} hover:text-white transition-colors duration-300`}
+                  className={`text-gray-300 ${social.color} transition-colors duration-300`}
                   whileHover={{ y: -3, scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                 >
@@ -299,20 +267,15 @@ const Footer = () => {
                 </motion.a>
               ))}
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         {/* Copyright */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400 text-sm"
-        >
+        <div className="border-t border-gray-800 mt-8 pt-6 text-center text-gray-400 text-sm">
           <p>
             &copy; {new Date().getFullYear()} Sufi Bites. {translations[currentLanguage].rights}
           </p>
-        </motion.div>
+        </div>
       </div>
     </motion.footer>
   );
