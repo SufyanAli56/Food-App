@@ -1,10 +1,11 @@
 "use client";
 
 import React from 'react';
-import HeroBanner from '../components/heroBanner/HeroBanner';
+
 import Categories from '../components/Categories/Categories';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../lib/Store';
+import HeroBanner from '../components/HeroBanner/HeroBanner';
 
 // Type definitions
 type LanguageCode = 'en' | 'ar' | 'fr' | 'es';

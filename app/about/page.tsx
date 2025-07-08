@@ -2,9 +2,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../app/lib/Store';
-import HeroBanner from '../components/HeroBanner/HeroBanner';
+
 import MyDishes from '../components/mydishes/MyDishes';
 import Services from '../components/Services/Services';
+import HeroBanner from '../components/heroBanner/HeroBanner';
 
 // Type definitions
 type LanguageCode = 'en' | 'ar' | 'fr' | 'es';
