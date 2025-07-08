@@ -71,7 +71,7 @@ const ContactPage = () => {
   const currentTranslations = translations[currentLanguage];
 
   return (
-    <div>
+    <div className='bg-white'>
       <HeroBanner
         title={currentTranslations.title.replace('{highlight}', currentTranslations.highlightText)}
         subtitle={currentTranslations.subtitle}

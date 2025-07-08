@@ -103,47 +103,87 @@ const MyDishes = () => {
         </motion.div>
 
         {/* Right: Images with Animation */}
-        <div className="relative w-full h-[380px] md:h-[400px] flex items-center justify-center">
-          <motion.img
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.6 }}
-            src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=500&q=80"
-            alt="Chicken Biryani"
-            className="absolute top-0 left-0 w-[44%] object-cover rounded-xl shadow-xl z-40"
-          />
+        {/* Right: Images with Animation */}
+<div className="relative w-full h-[380px] md:h-[400px] flex items-center justify-center">
+  {/* Starry background overlay */}
+  <div className="absolute inset-0 overflow-hidden rounded-xl">
+    <div className="absolute inset-0 bg-black/10 backdrop-blur-[1px] z-0" />
+    <div className="absolute inset-0 flex flex-wrap justify-around opacity-30">
+      {[...Array(50)].map((_, i) => (
+        <div
+          key={i}
+          className="w-0.5 h-0.5 bg-white rounded-full"
+          style={{
+            top: `${Math.random() * 100}%`,
+            left: `${Math.random() * 100}%`,
+            opacity: Math.random(),
+          }}
+        />
+      ))}
+    </div>
+  </div>
 
-          <motion.img
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            src="https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?auto=format&fit=crop&w=500&q=80"
-            alt="Nihari"
-            className="absolute top-10 left-10 w-[55%] object-cover rounded-xl shadow-xl z-30"
-          />
+  {/* Images with enhanced hover effects */}
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    whileHover={{ scale: 1.02 }}
+    transition={{ duration: 0.6 }}
+    className="absolute top-0 left-0 w-[44%] h-48 overflow-hidden rounded-xl shadow-xl z-40 group"
+  >
+    <img
+      src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=500&q=80"
+      alt="Chicken Biryani"
+      className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+    />
+    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+  </motion.div>
 
-          <motion.img
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            src="/Nihari.jpg"
-            alt="Seekh Kebab"
-            className="absolute top-20 left-20 w-[66%] object-cover rounded-xl shadow-xl z-20"
-          />
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    whileHover={{ scale: 1.02 }}
+    transition={{ duration: 0.6, delay: 0.1 }}
+    className="absolute top-10 left-10 w-[55%] h-56 overflow-hidden rounded-xl shadow-xl z-30 group"
+  >
+    <img
+      src="https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?auto=format&fit=crop&w=500&q=80"
+      alt="Nihari"
+      className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+    />
+    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+  </motion.div>
 
-          <motion.img
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            src="/Halwa Puri .jpg"
-            alt="Halwa Puri"
-            className="absolute top-28 left-32 w-[77%] object-cover rounded-xl shadow-xl z-10"
-          />
-        </div>
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    whileHover={{ scale: 1.02 }}
+    transition={{ duration: 0.6, delay: 0.2 }}
+    className="absolute top-20 left-20 w-[66%] h-64 overflow-hidden rounded-xl shadow-xl z-20 group"
+  >
+    <img
+      src="/Nihari.jpg"
+      alt="Seekh Kebab"
+      className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+    />
+    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+  </motion.div>
+
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    whileHover={{ scale: 1.02 }}
+    transition={{ duration: 0.6, delay: 0.3 }}
+    className="absolute top-28 left-32 w-[77%] h-72 overflow-hidden rounded-xl shadow-xl z-10 group"
+  >
+    <img
+      src="/Halwa Puri .jpg"
+      alt="Halwa Puri"
+      className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+    />
+    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+  </motion.div>
+</div>
       </div>
     </div>
   );
