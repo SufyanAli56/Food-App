@@ -3,8 +3,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/app/lib/Store';
-import HeroBanner from '@/app/components/HeroBanner/HeroBanner';
+
 import BreakfastMenu from '@/app/components/BreakfastMenu/BreakfastMenu';
+import HeroBanner from '@/app/components/heroBanner/HeroBanner';
 
 
 
