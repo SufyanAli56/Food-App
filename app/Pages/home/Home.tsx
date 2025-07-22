@@ -1,10 +1,10 @@
 import MyDishes from '@/app/components/mydishes/MyDishes';
-import HomeBanner from '../../components/homeBanner/HomeBanner';
 import HomeCard from '../../components/HomeCards/HomeCards'
 import Services from '@/app/components/Services/Services';
 import Testimonial from '@/app/components/testimonial/Testimonial';
 import Faq from '@/app/components/faq/Faq';
 import GetInTouch from '@/app/components/getIntouch/GetInTouch';
+import HomeBanner from '@/app/components/homebanner/HomeBanner';
 export const metadata = {
   title: 'Delicious Restaurant | Home',
   description: 'Experience the finest cuisine in town at our restaurant',
@@ -13,7 +13,7 @@ export const metadata = {
 export default function Home() {
   return (
     <main className='bg-white'>
-      <HomeBanner />
+        <HomeBanner/>
         <HomeCard/>
        <MyDishes/>
        <Services/>
