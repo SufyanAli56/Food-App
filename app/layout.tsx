@@ -1,17 +1,9 @@
 // app/layout.tsx
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
 import "./globals.css";
-import ProviderWrapper from './ProviderWrapper';
+import ProviderWrapper from "./ProviderWrapper";
 import Navbar from "./components/Navbar/Navbar";
-import Footer from "./components/Footer/Footer"; // Import your Footer component
-
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-poppins",
-});
+import Footer from "./components/Footer/Footer";
 
 export const metadata: Metadata = {
   title: "Sufi Restro",
@@ -24,14 +16,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${poppins.variable}`}>
-      <body className="antialiased flex flex-col min-h-screen">
+    <html lang="en">
+      <body className="antialiased flex flex-col min-h-screen font-sans">
         <ProviderWrapper>
-          <Navbar/>
-          <main className="flex-grow">
-            {children}
-   
-          </main>
+          <Navbar />
+          <main className="flex-grow">{children}</main>
           <Footer />
         </ProviderWrapper>
       </body>
