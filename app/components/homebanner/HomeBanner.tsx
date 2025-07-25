@@ -2,9 +2,9 @@
 
 import React from 'react';
 import { useSelector } from 'react-redux';
-import type { RootState } from '../../lib/Store'; // Adjust path as needed
+import type { RootState } from '../../lib/Store';
 
-// Define translation types
+// Translation types
 type LanguageCode = 'en' | 'ar' | 'fr' | 'es';
 
 interface BannerTranslations {
@@ -46,12 +46,19 @@ const HomeBanner = () => {
   const translations = bannerTranslations[currentLanguage];
 
   return (
-    <div
-      className="relative h-screen w-full bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: "url('/My restrunt.png')" }} // ✅ Replace with your image path
-    >
+    <div className="relative h-screen w-full overflow-hidden">
+      {/* Background video */}
+      <video
+        className="absolute top-0 left-0 w-full h-full object-cover z-0"
+        src="/Video.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+      />
+
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black bg-opacity-40 z-10"></div>
+      <div className="absolute inset-0 bg-black bg-opacity-40 z-10" />
 
       {/* Content */}
       <div className="relative z-20 h-full flex flex-col items-center justify-center text-center px-4">
@@ -61,7 +68,7 @@ const HomeBanner = () => {
         <p className="text-xl md:text-2xl text-white mb-8 max-w-2xl">
           {translations.subtitle}
         </p>
-        <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row gap-4">
           <button className="bg-amber-600 hover:bg-amber-700 text-white px-6 py-3 rounded-full font-medium transition-colors">
             {translations.menuButton}
           </button>
